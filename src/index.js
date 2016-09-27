@@ -2,9 +2,16 @@ var express = require('express')
 var app = express()
 
 
-app.get('/',function (req,res) {
-  // res.send('hello xiaoyan')
-  console.log("xiaoyan");
+app.get('/:name',function (req,res) {
+  var username = req.params.name
+  var page = "<html>"+
+            "<body>"+
+              "<h1>"+
+              username+"的购物车"+
+              "</h1>"+
+              "</body>"+
+            "</html>"
+ res.send(page)
 })
 app.get('/cheng',function (req,res){
   // res.send('hello cheng')
