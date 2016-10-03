@@ -1,62 +1,42 @@
+var express = require('express');
+var app = express();
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }))
 
-var mongoose = require('mongoose');
-//导入mongoose
+app.get('/post',function (req,res) {
 
-mongoose.connect('mongodb://localhost:27017/persons');
-//mongodb协议链接，连接数据库 persons为连接的数据库
+  console.log('GET/posts');
+})
+//读取所有文章
 
-var db = mongoose.connection;
-//获得这个连接，存放到db中
-// db.on('error', console.error.bind(console, 'connection error:'));
-var PersonSchema = mongoose.Schema({
-    name: String,
-    password:String,
-    age:String
-    //描述数据类型
-});
-db.once('open', function() {
-  console.log("success");
-});
-var Persons = mongoose.model('Persons',PersonSchema);
+app.get('/',function (req,res) {
+var page = "<form method='post' action='/post'>"+
+              "<input type='text' name='title'/>"+
+              "<input type='submit'/>"+
+            "</form>"
 
-var user = new Persons({
-  name:"xixilide",
-  password:123,
-  age:20
-});
-user.save();
+  res.send(page);
+  // console.log('GET/posts/：post_id');
+})
+//读取一篇文章
+app.put('/post/:id',function (req,res) {
 
-console.log(user);
-
-Persons.find().exec(function(err,Persons){
-  // console.log(Persons);
+  console.log('update');
+})
+//更新一篇文章
+app.post('/post/',function (req,res) {
+res.send("the blog title is: "+req.body.title)
+ console.log('creat');
 })
 
-// personSchema.methods.speak = function () {
-//   var greeting = this.name
-//     ? "Meow name is " + this.name
-//     : "I don't have a name";
-//   console.log(greeting);
-// }
+//新建一篇文章，页面需要有表单提交
+ app.delete('/post/:id',function (req,res) {
 
-Persons.findById({_id: '57ec8894e195c50dadbb996a'}, function(err, user) {
-  user.name = 'new'
-  user.save(function(err){
-    console.log('更新了！')
-    Persons.find().exec(function(err, users) {
-      // 异步执行
-      console.log(users);
-    });
-  });
-console.log("我先出来了")
-})
-Persons.findById({_id: '57ec8894e195c50dadbb996a'}, function(err, user) {
-  user.name = 'new'
-  user.remove(function(err){
-    console.log('删除了')
-    Persons.find().exec(function(err, users) {
-      // 异步执行
-      console.log(users);
-    });
-  });
+   console.log('delete');
+ })
+
+//删除一篇文章
+app.listen(3000,function(){
+  console.log('runing on port 3000');
 })

@@ -1,15 +1,34 @@
 # express的知识
 ### node.js
+React 是一一个前端框架
+Express 是后台框架
+API（Application Programming Interface,应用程序编程接口）
+
+[express网站](https://expressjs.com/)
+
+### 安装express
+npm install --save express
+
+### HTTP请求
+HTTP 请求 = Verb + Path
+HTTP 请求 = get/post/... + /about
+
+#### 导入express包
+var express = require('express')
+var app = express();
 
 ```js
 var express = require('express')
 //相当于import
 app.get('/',function (req,res) {
   res.send('hello express')
+  //res.send() 反馈给前台，网页的信息
 })
 //代码用来接收请求
 app.get('/xx',function (req,res){
   res.send('hello xiaoyan')
+  console.log('node');
+  //node 环境下是在后台打印的
 })
 //监听端口
 app.listen(3000)
